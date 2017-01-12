@@ -1,0 +1,37 @@
+
+******************* Installation of the R package *********************
+* Use the following command in R to install and call the “QRank” package:
+
+install.packages(“QRank”)
+library(QRank)
+
+********************* Sample Codes for Analysis ******************
+* Example
+set.seed(123)                                                                            
+n=300                                                                                 
+x=rbinom(n, 2, 0.2)                                                                  
+y=rnorm(n, mean=0, sd=1)                                                             
+z=cbind(rbinom(n, 1, 0.3), rnorm(n, mean=2, sd=2))                                   
+taus=c( 0.25, 0.5, 0.75)                                                             QRBT(gene=y, snp=x, cov=z, tau=taus) 
+# $composite.pvalue
+# [1] 0.2241873
+# $quantile.specific.pvalue
+#      0.25       0.5      0.75 
+# 0.5452044 0.1821452 0.5938421 
+
+
+********************* Sample Codes to Open the eQLT results ******************
+* eg. Whole blood
+blood=readRDS(“~path/Blood_fdr_0.05.RData") # This data set contains all SNP-gene pairs with FDR<0.05 for at least one approach. “NA” is given if the pair does not pass alpha=0.05 in this approach.  
+
+dim(blood)
+# [1] 1559699       8
+
+head(blood)
+                   # snp              gene           lm    qvalue_lm           rq   qvalue_rq cls qvalue_cls
+# 1 10_100000625_A_G_b37 ENSG00000138131.3 8.006680e-05 1.220914e-02           NA          NA  NA         NA
+# 2 10_100000625_A_G_b37 ENSG00000166024.9 2.026007e-04 2.636478e-02           NA          NA  NA         NA
+# 3 10_100003785_T_C_b37 ENSG00000138131.3 4.670521e-05 7.724398e-03           NA          NA  NA         NA
+# 4 10_100003785_T_C_b37 ENSG00000166024.9 5.137213e-08 1.750116e-05 1.181321e-05 0.003623010  NA         NA
+# 5 10_100004441_G_C_b37 ENSG00000138131.3 2.036786e-04 2.647986e-02           NA          NA  NA         NA
+# 6 10_100004441_G_C_b37 ENSG00000166024.9 3.740262e-07 1.071378e-04 1.833868e-05 0.005346338  NA         NA
